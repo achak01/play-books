@@ -1,0 +1,15 @@
+---
+-
+  hosts: all
+
+  tasks:
+
+     - name: yum-install
+       yum:  name={{ item }} state=present
+       with_items:
+       - m4
+       - xinetd
+       - libaio-devel
+
+     - name: service-start
+       service: name=xinetd state=started

@@ -1,0 +1,11 @@
+---
+# handlers file for agent.install
+
+    - name: untar
+      notify: install
+      unarchive: "src=/Agent/HPOvOpsAgt-12.01.020-Linux-release.tar dest=/Agent/ remote_src=yes"
+    - name: install
+      command: "sh /Agent/oainstall.sh -i -a"
+
+
+

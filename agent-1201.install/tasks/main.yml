@@ -1,0 +1,7 @@
+---
+# tasks file for agent.install
+
+   -  name: Agent-Copy
+      copy: "src=/Agent/HPOvOpsAgt-12.01.020-Linux-release.tar dest=/Agent/"
+      notify: untar
+      when: "ansible_distribution == 'CentOS' or ansible_distribution == 'RedHat'"

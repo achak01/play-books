@@ -1,0 +1,19 @@
+---
+-
+  hosts: all
+
+
+
+  tasks:
+  - name: directory-creation
+    file: path=/Database state=directory
+  - name: copy-file
+    copy: src=/LIN/DB/oracle/11GR2/{{ item }} dest=/Database
+    with_items:
+    - linux.x64_11gR2_database_1of2.zip
+    - linux.x64_11gR2_database_2of2.zip
+  - name: unzip
+    unarchive: src=/Database/{{ item }} dest=/Database/ remote_src=yes copy=no
+    with_items:
+    - linux.x64_11gR2_database_1of2.zip
+    - linux.x64_11gR2_database_2of2.zip

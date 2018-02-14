@@ -1,0 +1,10 @@
+---
+# tasks file for postgres.sql
+
+  - name: Install repositories packages
+    shell: rpm -Uvh https://download.postgresql.org/pub/repos/yum/9.5/redhat/rhel-6-x86_64/pgdg-redhat95-9.5-3.noarch.rpm
+    when:  ansible_distribution == "RedHat"
+    environment: "{{ proxy_env}}"
+    notify:  postgresql95-servers
+
+

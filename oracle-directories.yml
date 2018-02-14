@@ -1,0 +1,13 @@
+---
+-
+  hosts: all
+
+  tasks:
+  - name: oracle-home-creation
+    file: path=/opt/oracle/product/11.2.0  state=directory owner=oracle group=oinstall recurse=yes
+
+  - name: oracle-inventory
+    file: path=/opt/oracle/oraInventory state=directory owner=oracle group=oinstall mode=770
+
+  - name: change-ownership
+    file:  path=/opt/oracle owner=oracle group=oinstall recurse=yes

@@ -1,0 +1,14 @@
+---
+-
+  hosts: all
+  tasks:
+
+   -  name: copy-file
+      copy: "src=/9.22/HPOM_Linux2.6_64_09.22.190.tar dest=/9.22/"
+
+   -  name:  untar
+      unarchive: "src=/9.22/HPOM_Linux2.6_64_09.22.190.tar dest=/9.22/ remote_src=yes"
+
+   -  name: Install OML
+      command: /9.22/ovoinstall -defaults /root/defaults.conf -u
+

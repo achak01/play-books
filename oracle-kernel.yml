@@ -1,0 +1,19 @@
+---
+-
+  hosts: all
+
+  tasks:
+
+     - name: kernel-parameters
+       sysctl:  name={{ item.name }} value={{ item.groups }} state=present reload=yes
+       with_items:
+        - { name: 'net.core.rmem_default', groups: '262144' }
+        - { name: 'net.core.rmem_max', groups: '4194304' }
+        - { name: 'net.core.wmem_default', groups: '262144' }
+        - { name: 'net.core.wmem_max', groups: '1048576' }
+        - { name: 'net.ipv4.ip_local_port_range' , groups: '9000 65500'}
+        - { name: 'kernel.shmall', groups: '2097152' }
+        - { name: 'kernel.shmmax',groups: '536870912' }
+        - { name: 'kernel.shmmni',groups: '4096' }
+        - { name: 'kernel.sem',groups: '250 32000 100 128' }
+        - { name: 'fs.aio-max-nr', groups: '1048576' }

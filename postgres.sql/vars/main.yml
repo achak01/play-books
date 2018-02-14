@@ -1,0 +1,4 @@
+---
+# vars file for postgres.sql
+     proxy_env: 
+           https_proxy: http://web-proxy.in.hpecorp.net:8080/

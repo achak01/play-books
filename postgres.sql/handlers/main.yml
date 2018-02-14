@@ -1,0 +1,24 @@
+---
+# handlers file for postgres.sql
+  - name: postgresql95-servers
+    yum: name={{ item }} state=present
+    environment: "{{ proxy_env}}"
+    with_items:
+    - postgresql95-server
+    - postgresql
+    notify: change ownership
+  - name: change ownership
+    file: path=/usr/pgsql-9.5/{{ item }} owner=postgres group=postgres mode=0775
+    with_items:
+    - bin
+    - lib
+    - share
+    notify: postgres-directories
+  - name: postgres-directories
+    file: dest=/usr/pgsql-9.5/{{ item }} state=directory owner=postgres group=postgres recurse=yes
+    with_items:
+    - data
+    - cluster
+    - index
+
+

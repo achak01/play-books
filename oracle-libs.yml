@@ -1,0 +1,36 @@
+---
+-
+  hosts: all
+
+  tasks:
+
+     - name: yum-install
+       yum:  name={{ item }} state=present
+       with_items:
+       - m4
+       - xinetd
+       - libaio-devel
+       - binutils
+       - compat-libcap1
+       - compat-libstdc++-33
+       - gcc
+       - gcc-c++
+       - glibc
+       - glibc-devel
+       - libaio
+       - libaio-devel
+       - libgcc
+       - libstdc++
+       - libstdc++-devel
+       - make
+       - openmotif
+       - openmotif22
+       - sysstat
+       - ksh
+       - binutils
+       - make
+       - libXi
+       - libXtst
+
+     - name: service-start
+       service: name=xinetd state=started

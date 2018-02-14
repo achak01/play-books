@@ -1,0 +1,36 @@
+---
+- hosts: all
+
+  vars:
+    proxy_env:
+      https_proxy: http://web-proxy.in.hpecorp.net:8080/
+
+  handlers:
+  - name: change ownership
+    file: path=/usr/pgsql-9.5/{{ item }} owner=postgres group=postgres mode=0775 state=directory
+    with_items:
+    - bin
+    - lib
+    - share
+    notify: postgres-directories
+
+  - name: postgres-directories
+    file: dest=/usr/pgsql-9.5/{{ item }} state=directory owner=postgres group=postgres
+    with_items:
+    - data
+    - cluster
+    - index
+
+  tasks:
+  - name: Install repositories packages
+    shell: rpm -Uvh https://download.postgresql.org/pub/repos/yum/9.5/redhat/rhel-6-x86_64/pgdg-redhat95-9.5-3.noarch.rpm
+    when:  ansible_distribution == "RedHat"
+    environment: "{{ proxy_env}}"
+
+  - name: "Install postgresql95-servers."
+    yum: name={{ item }} state=present
+    environment: "{{ proxy_env}}"
+    with_items:
+    - postgresql95-server
+    - postgresql
+    notify: change ownership

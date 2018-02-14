@@ -1,0 +1,16 @@
+---
+-
+  handlers:
+   - name: copy-file
+     copy: "src=/ovoconfigure/HOTFIX_QCCR177327_OML9.21.100.tar dest=/ovoconfigure"
+
+  hosts: all
+  tasks:
+   - name: directory creation
+     file: "path=/OML  state=directory"
+     file: "path=/ovoconfigure state=directory"
+
+   - name: "OML Copy"
+     copy:  "src=/LIN/OM-server/9.21/OML-9.21.tar dest=/OML"
+     notify:  copy-file
+     when: "ansible_distribution_major_version == '7' and ansible_distribution == 'RedHat'"

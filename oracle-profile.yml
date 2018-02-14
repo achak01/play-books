@@ -1,0 +1,19 @@
+---
+-
+  hosts: all
+
+
+
+  tasks:
+  - name: profile-creation
+    lineinfile: dest=/home/oracle/.bash_profile state=present line={{ item }} create=yes
+    with_items:
+    - ORACLE_BASE=/opt/oracle
+    - export ORACLE_BASE
+    - ORACLE_HOME=$ORACLE_BASE/product/11.2.0
+    - export ORACLE_HOME
+    - PATH=$PATH:$ORACLE_HOME/bin
+    - export PATH
+    - ORACLE_SID=openview
+    - export ORACLE_SID
+    - export PATH

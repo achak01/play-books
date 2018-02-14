@@ -1,0 +1,5 @@
+---
+- hosts: all
+  tasks:
+  - name: install postgres
+    command: yum install --quiet -y postgresql95-server postgresql95

@@ -1,0 +1,27 @@
+- hosts: all
+
+  handlers:
+  - name: eate-directory-removal
+    command: rm -rf /opt/eate/
+
+  - name: eate-creation
+    get_url: url={{ item }}  dest=/eate-download/
+    with_items:
+    - ftp://ftp:ftp@btovm111.hpeswlab.net/ACoE-Deliverables/EATE-BASE/06.20.120/eate_base_Linux2.6_64_06.20.120.tar
+    - ftp://ftp:ftp@bodablr.hpeswlab.net/pub/ec/OvEaAgt/12.05/12.05.006/eate_ovo_agtone-12.05.006-Linux2.6_64-release.tar
+
+
+  tasks:
+  - name: "check wether eate is installed"
+    shell: ps -ef | grep /opt/eate/bin/eated.pl | wc -l
+    register: output
+  - name: "stopping eate"
+    shell: /opt/eate/bin/eated.pl -stop
+    when: output.stdout == "9"
+    notify: eate-directory-removal
+  - name: "creating-eate"
+    get_url: url={{ item }}  dest=/eate-download/
+    with_items:
+    - ftp://ftp:ftp@btovm111.hpeswlab.net/ACoE-Deliverables/EATE-BASE/06.20.120/eate_base_Linux2.6_64_06.20.120.tar
+    - ftp://ftp:ftp@bodablr.hpeswlab.net/pub/ec/OvEaAgt/12.05/12.05.006/eate_ovo_agtone-12.05.006-Linux2.6_64-release.tar
+    when: output.stdout == "2"

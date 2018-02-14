@@ -1,0 +1,17 @@
+---
+-
+  handlers:
+    -
+      name: untar
+      notify: install
+      unarchive: "src=/Agent/HPOvOpsAgt-12.01.020-Linux-release.tar dest=/Agent/ remote_src=yes"
+    -
+      command: "sh /Agent/oainstall.sh -i -a"
+      name: install
+  hosts: iwfvm07785.hpeswlab.net
+  tasks:
+    -
+      copy: "src=/Agent/HPOvOpsAgt-12.01.020-Linux-release.tar dest=/Agent/"
+      name: Agent-Copy
+      notify: untar
+      when: "ansible_distribution == 'CentOS' or ansible_distribution == 'RedHat'"

@@ -1,0 +1,9 @@
+---
+- hosts: all
+
+  tasks:
+  - name: remove
+    expect:
+     command: /opt/OV/bin/OpC/install/ovoremove
+     responses:
+          'Press RETURN to continue:'
